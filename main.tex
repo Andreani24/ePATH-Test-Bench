@@ -1,0 +1,46 @@
+\documentclass[10pt,twocolumn]{scrartcl}
+\usepackage[a4paper,width=170mm,top=25mm,bottom=25mm,bindingoffset=3mm]{geometry}
+\setlength{\parskip}{1em}
+
+\usepackage{lipsum}
+\usepackage[pdftex]{graphicx} 
+\usepackage{url} 
+\usepackage{lipsum} 
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage{mwe}
+\usepackage{multicol}
+
+\renewenvironment{abstract}
+ {\quotation\large\noindent\rule{\linewidth}{.5pt}\par\smallskip
+  {\centering\bfseries\abstractname\par}\medskip}
+ {\par\noindent\rule{\linewidth}{.5pt}\endquotation}
+
+\begin{document}
+
+\renewcommand{\refname}{References}
+\input{tex/title.tex} 
+
+\twocolumn[
+\begin{@twocolumnfalse}
+	\title{Your Project Title Here}
+\author{Your Names Here}
+\maketitle
+
+\begin{abstract}
+Lorem ipsum dolor sit amet, consectetuer adipiscingelit. Ut purus elit, vestibulum ut, placerat ac, adipisc-ing vitae, felis. Curabitur dictum gravida mauris. Namarcu libero, nonummy eget, consectetuer id, vulputatea, magna.  Donec vehicula augue eu neque.  Pellen-tesque habitant morbi tristique senectus et netus etmalesuada fames ac turpis egestas. Mauris ut leo. Crasviverra metus rhoncus sem.  Nulla et lectus vestibu-lum urna fringilla ultrices. Phasellus eu tellus sit amettortor gravida placerat. Integer sapien est, iaculis in,pretium quis, viverra ac, nunc. Praesent eget sem velleo ultrices bibendum.  Aenean faucibus.  Morbi do-lor nulla, malesuada eu, pulvinar at, mollis ac, nulla.Curabitur auctor semper nulla. Donec varius orci egetrisus.  Duis nibh mi, congue eu, accumsan eleifend,sagittis quis, diam. Duis eget orci sit amet orci dignis-sim rutrum.
+\end{abstract}
+\end{@twocolumnfalse}]
+
+\input{tex/introduction.tex} 
+\input{tex/background.tex}
+\input{tex/methods.tex}
+\input{tex/results.tex}
+\input{tex/discussion.tex}
+\input{tex/conclusion.tex}
+\input{tex/appendix.tex}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
