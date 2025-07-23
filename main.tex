@@ -13,6 +13,7 @@
 \usepackage{subcaption}
 \usepackage{mwe}
 \usepackage{multicol}
+\usepackage{comment}
 
 \renewenvironment{abstract}
  {\quotation\large\noindent\rule{\linewidth}{.5pt}\par\smallskip
@@ -22,12 +23,11 @@
 \begin{document}
 
 \renewcommand{\refname}{References}
-\input{tex/title.tex} 
 
 \twocolumn[
 \begin{@twocolumnfalse}
-	\title{Your Project Title Here}
-\author{Your Names Here}
+	\title{ePATH Test Bench}
+\author{Andreani Kalatha}
 \maketitle
 
 \begin{abstract}
@@ -36,7 +36,6 @@ Lorem ipsum dolor sit amet, consectetuer adipiscingelit. Ut purus elit, vestibul
 \end{@twocolumnfalse}]
 
 \input{tex/introduction.tex} 
-\input{tex/background.tex}
 \input{tex/methods.tex}
 \input{tex/results.tex}
 \input{tex/discussion.tex}
