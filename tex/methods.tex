@@ -40,7 +40,7 @@ There was a number of errors with this design:
 \begin{itemize}
 \item The symbol used for the banana socket is wrong. It represents the banana socket as a one-pin connector but it has 4 connecting terminals. This led to receiving an inquiry about it from the manufacturers.
 \item The orientation of the button footprint is incorrect-it should be rotated by 90 degrees. This issue was bypassed when making the button connection to the board but an awkward connection was produced.
-\item The wiring of the Restart button is incorrect. It was not connected to the Arduino DUE pin 8 properly. This was corrected on the board according to the diagram in Figure \ref{button_wiring}.
+\item The wiring of the Restart button is incorrect. It was not connected to the Arduino DUE pin 8 properly. This was corrected on the board by adding a wire according to the diagram in Figure \ref{button_wiring}.
 \end{itemize}
 
 \begin{figure}[H]
@@ -56,8 +56,9 @@ There was a number of errors with this design:
 The improvements made for the second version of the PCB include:
 \begin{itemize}
 \item Some different electrical components were chosen, such as the MUX, that were more appropriate for the last scale production of the custom PCB board.
-\item Implemented a module capable of obtaining the RFID tag of the ePATH board.
-\item c
+\item Implemented the PN532 module capable of obtaining the RFID tag of the ePATH board \cite{pn532manual}.
+\item Implement a connector to enable easy connection of custom PCB with ePATH PCB.
+\item l
 \end{itemize}
 
 
