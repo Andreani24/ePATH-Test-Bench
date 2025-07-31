@@ -40,6 +40,7 @@ There was a number of errors with this design:
 \begin{itemize}
 \item The symbol used for the banana socket is wrong. It represents the banana socket as a one-pin connector but it has 4 connecting terminals. This led to receiving an inquiry about it from the manufacturers.
 \item The orientation of the button footprint is incorrect-it should be rotated by 90 degrees. This issue was bypassed when making the button connection to the board but an awkward connection was produced.
+\item When testing with the ePATH board it was discovered that upon trying to measure negative voltages with the board the circuit stopped working. Upon testing the board, it was established that it can mesure a minimum of around -0.5V. Therefore, a different MUX or a different design should be used.
 \item The wiring of the Restart button is incorrect. It was not connected to the Arduino DUE pin 8 properly. This was corrected on the board by adding a wire according to the diagram in Figure \ref{button_wiring}.
 \end{itemize}
 
