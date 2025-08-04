@@ -1,0 +1,69 @@
+\section{Extra projects}
+
+Some additional small projects were undertaken in parallel to the main project.
+
+\subsection{Electrical display switching}
+To test the functionality of the device during animal studies, it was proposed that the Target and Crossing catheters are connected to three different ePATH displays. To make the change between displays as easy as possible without requiring the removal of the catheters from the animal's body a switching mechanism is required. While the mechanical switching between the displays with switches was already explored, an electrical decision was required. Some electrical components that would enable the switching were explored as follows.
+
+Firstly, the idea of using shift registers in combination with solid state relays(SSRs) was explored. A large advantage of using this is that SSRs are optically isolated. This means that the input and output are physically isolated when the current/voltage is below a certain level which enhances precision by minimizing noise. Other advantages include their fast response time, silent operation and low power consumption. 
+
+
+
+\subsection{Text file saving}
+Data printed in the Serial monitor of Arduino IDE can easily be lost and is difficult to work with. To make data a acquisition and handling easier a simple GUI was developed that captures data printed on the Serial monitor and saves them in a .txt file. The GUI consists of 2 main features; a save button and a clear button. The save button saves the data received until now in a text file. The clear button clears data received in case they were not satisfactory.
+
+The code used to develop this GUI is ....
+
+\begin{table*}[ht]
+    \centering
+    \begin{tabular}{p{0.25\linewidth}p{0.25\linewidth}p{0.25\linewidth}}
+    \hline
+    column 1 & column 2 & column 3\\
+    \hline
+    1 & 2 & 3\\
+    1 & 2 & 3\\
+    1 & 2 & 3\\
+    1 & 2 & 3\\
+    \hline
+    \end{tabular}
+    \caption{Another random table}
+    \label{tab:2}
+\end{table*}
+\noindent Another type of table for your results below.
+
+\subsection{Subtopic 2}
+\lipsum[1]
+
+\noindent Another figure grid example: (on next page)
+
+\begin{figure*}[ht]
+\begin{multicols}{2}
+        \centering
+        \begin{subfigure}[b]{0.475\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{img/bioeng.jpg}
+            \caption{Part 1}    
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.475\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{img/bioeng.jpg}
+            \caption{Part 2}    
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{0.475\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{img/bioeng.jpg}
+            \caption{Part 3}  
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.475\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{img/bioeng.jpg}
+            \caption{Part 4}    
+        \end{subfigure}
+        \label{fig:mean and std of nets}
+        \end{multicols}
+        \caption {A figure grid} 
+        \label{fig:3}
+    \end{figure*}
