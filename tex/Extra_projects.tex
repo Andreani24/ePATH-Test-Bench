@@ -1,6 +1,6 @@
 \section{Extra projects}
 
-Some additional small projects were undertaken in parallel to the main project.
+Some additional small projects were undertaken in parallel to ePATH Test Bench project.
 
 \subsection{Electrical display switching}
 To test the functionality of the device during animal studies, it was proposed that the Target and Crossing catheters are connected to three different ePATH displays. To make the change between displays as easy as possible without requiring the removal of the catheters from the animal's body a switching mechanism is required. While the mechanical switching between the displays with switches was already explored, an electrical decision was required. Some electrical components that would enable the switching were explored as follows.
@@ -10,9 +10,15 @@ Firstly, the idea of using shift registers in combination with solid state relay
 
 
 \subsection{Text file saving}
-Data printed in the Serial monitor of Arduino IDE can easily be lost and is difficult to work with. To make data a acquisition and handling easier a simple GUI was developed that captures data printed on the Serial monitor and saves them in a .txt file. The GUI consists of 2 main features; a save button and a clear button. The save button saves the data received until now in a text file. The clear button clears data received in case they were not satisfactory.
+Data printed in the Serial monitor of Arduino IDE can easily be lost and is difficult to work with. To make data acquisition and handling easier, a simple GUI was developed that captures the printed data and saves it in a .txt file. The GUI consists of a:
+\begin{itemize}
+\item A list-box that displays the information printed on the Serial monitor. 
+\item A save button that saves the data in a text file at the desired directory.
+\item A clear button that deletes data in case they were corrupted.
+\item A information button that displays an information window that explains the GUI's functionalities.
+\end{itemize}
 
-The code used to develop this GUI is ....
+The python code used to develop this GUI is in the resources folder of this document under the name Save text files. An Arduino code that prints out the numbers from 1-100 is also provided for demonstrative purposes.
 
 \begin{table*}[ht]
     \centering

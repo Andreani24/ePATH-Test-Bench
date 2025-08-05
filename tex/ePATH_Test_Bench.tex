@@ -12,7 +12,7 @@ The most prominent difficulty was that the multimeter received commands but did 
           \label{MAX3232}
     \end{figure}
 
-Some code that successfully enables communication between an Arduino DUE and the multimeter can be found in the project under Code that worked. This is useful to test initial communication with the multimeter. The connections of the Arduino DUE and the MAX3232 module are as shown in Figure \ref{MAX3232_Arduino}.
+Some code that successfully enables communication between an Arduino DUE and the multimeter can be found in the Resources folder under the name Code that worked. This is useful to test initial communication with the multimeter. The connections of the Arduino DUE and the MAX3232 module are as shown in Figure \ref{MAX3232_Arduino}.
 
 \begin{figure}[H]
           \centering
@@ -27,20 +27,20 @@ After some prototyping with a breadboard, the first version of the PCB was devel
 
 A 16 channel MUX was chosen to direct the current of each ePATH pin to the multimeter so that the tests can be performed. A MUX was chosen over alternatives, such as shift registers with relays, for its simple wiring and fast operation \cite{tiMAX3232guide}. A 16 channeled one was chosen as there are 12 pins to be tested.
 
-The kiCAD design of the PCB is stored in the project as PCB attempt 1. When soldering the components on the board some alternations were made; instead of $330\,\Omega$ resistors, $1.6k\,\Omega$ resistors were used and instead of $10k\,\Omega$ resistors $4.6k\,\Omega$ resistors were used. The Arduino program used on it to test the functionality of the board is saved in the project as PCB programming. 
+The kiCAD design of the PCB is stored in the resources folder under PCB attempt 1. When soldering the components on the board some alternations were made; instead of $330\,\Omega$ resistors, $1.6k\,\Omega$ resistors were used and instead of $10k\,\Omega$ resistors $4.6k\,\Omega$ resistors were used. The Arduino program used on it to test the functionality of the board is saved in the resources folder under PCB programming. 
 
 In the schematic, the $330\,\Omega$ resistors were chosen since the forward voltage drop for white LEDs is approximately 2.4V and the desired current flow through them is about 10mA. Therefore:
 \[
 R = \frac{V}{I} = \frac{5\,\mathrm{V} - 2.4\,\mathrm{V}}{10\,\mathrm{mA}}=260\Omega
 \]
-Since $330\,\Omega$ is very close to the desired resistance and is a more readily available resistor value it was chosen.
+Since $330\,\Omega$ is very close to the desired resistance and is a more readily available resistor value it was chosen for the schematic. In the end the $10k\,\Omega$ resistors used proved to work well.
 
 
 There was a number of errors with this design:
 \begin{itemize}
-\item The symbol used for the banana socket is wrong. It represents the banana socket as a one-pin connector but it has 4 connecting terminals. This led to receiving an inquiry about it from the manufacturers.
+\item The footprint used for the banana socket is wrong. It only has a hole for the cental pin of the socket but not for the other 4 pins. This led to receiving an inquiry about it from the PCB manufacturers but this was easily resolved.
 \item The orientation of the button footprint is incorrect-it should be rotated by 90 degrees. This issue was bypassed when making the button connection to the board but an awkward connection was produced.
-\item When testing with the ePATH board it was discovered that upon trying to measure negative voltages with the board the circuit stopped working. Upon testing the board, it was established that it can mesure a minimum of around -0.5V. Therefore, a different MUX or a different design should be used.
+\item When testing the PCB with the ePATH board it was discovered that upon trying to measure negative voltages the PCB stopped working. The PCB was tested and it was established that it can measure a minimum voltage of around -0.5V. Therefore, a different MUX capable of enabling negative voltage measurements should have been used.
 \item The wiring of the Restart button is incorrect. It was not connected to the Arduino DUE pin 8 properly. This was corrected on the board by adding a wire according to the diagram in Figure \ref{button_wiring}.
 \end{itemize}
 
@@ -54,15 +54,17 @@ There was a number of errors with this design:
 
 
 \subsection{PCB version 2}
-The improvements made for the second version of the PCB include:
+The second version of the PCB was given the name 'Automated DMM tester V2-July 2025'. The purpose of this version is to perform some tests with ePATH. The improvements made for this version include:
 \begin{itemize}
-\item Some different electrical components were chosen, such as the MUX, that were more appropriate for the last scale production of the custom PCB board.
-\item Implemented the PN532 module capable of obtaining the RFID tag of the ePATH board \cite{pn532manual}.
-\item Implement a connector to enable easy connection of custom PCB with ePATH PCB.
-\item l
+\item To facilitate the connection between the test points on ePATH with the PCB, a D-sub connector was implemented.
+\item The PN532 module capable of obtaining the RFID tag of the ePATH board \cite{pn532manual} was implemented.
+\item Instead of using a multiplexer, shift registers and relays were used. That's because relays are optically isolated which minimizes noise. 
+\item Since the number of electrical components being controlled by the Arduino increased in this PCB iteration, an external voltage source was required; the PCB could no longer be powered by the Arduino. For that reason a 5V voltage regular was implemented.
+\item Since the ePATH board has 2 grounds a control system to switch between them was implemented.
+\item A digital potentiometer was implemented to produce the resistances needed for some of the ePATH board tests. In order to confirm that the potentiometer produced the correct resistances a port was implemented across it.
 \end{itemize}
 
-I ran an electrical simulation to enhance my understanding about shift registers which is saved in the reference section of this document under Shift registers sim.
+The kiCAD design of the PCB is stored in the resources folder under PCB attempt 2. To enhance my understanding of shift register operation I wired up the relays and shift registers in TinkerCad and ran some simulations. The simulation is stored in the resources folder under Shift registers sim.
 
 
 
