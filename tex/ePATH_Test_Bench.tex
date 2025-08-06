@@ -39,8 +39,8 @@ Since $330\,\Omega$ is very close to the desired resistance and is a more readil
 There was a number of errors with this design:
 \begin{itemize}
 \item The footprint used for the banana socket is wrong. It only has a hole for the cental pin of the socket but not for the other 4 pins. This led to receiving an inquiry about it from the PCB manufacturers but this was easily resolved.
-\item The orientation of the button footprint is incorrect-it should be rotated by 90 degrees. This issue was bypassed when making the button connection to the board but an awkward connection was produced.
-\item When testing the PCB with the ePATH board it was discovered that upon trying to measure negative voltages the PCB stopped working. The PCB was tested and it was established that it can measure a minimum voltage of around -0.5V. Therefore, a different MUX capable of enabling negative voltage measurements should have been used.
+\item The orientation of the button footprint is incorrect-it should be rotated by 90 degrees. This issue was bypassed when making the button connection to the board.
+\item When testing the PCB with the ePATH board it was discovered that upon trying to measure negative voltages it stopped working. It was established that it can measure a minimum voltage of around -0.5V. Therefore, a different MUX capable of enabling negative voltage measurements should have been used.
 \item The wiring of the Restart button is incorrect. It was not connected to the Arduino DUE pin 8 properly. This was corrected on the board by adding a wire according to the diagram in Figure \ref{button_wiring}.
 \end{itemize}
 
