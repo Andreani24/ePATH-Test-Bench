@@ -1,29 +1,53 @@
 \section{ePATH Test Bench}
 
+
+\subsection{Overview}
+The purpose of this project is to check that the PCB board of ePATH functions properly. This would help ensure that it was properly manufactured by the factory and it will help smooth identification of faults during maintenance. The process must be automated and user-friendly to enable any technician without good knowledge of the electronics of ePATH to perform this test. 
+
+The different components of the testing system and their interactions are briefly introduced in Figure \ref{end_goal_diagram}.
+
+
+\begin{figure}[H]
+          \centering
+          \includegraphics[width=0.8\linewidth]{img/General end goal diagram.png}
+          \caption{Overview of design aspects ePATH testing software.}
+          \label{end_goal_diagram}
+    \end{figure}
+
+
+The specific objectives of ePATH Test Bench project were: 
+\begin{itemize}
+\item To establish communication between a computer and a multimeter so that any measurements made from the ePATH PCB can easily be processed by the PC to check whether they are as expected.
+\item To design a custom PCB board that selects the appropriate pin from the ePATH board to be tested. Since the ePATH board consists of 2 different grounds, it should accommodate for this by selecting the correct one for each measurement.
+\item To develop a GUI that offers an interactive way to do the test.
+\item To produce a pdf file with a summary of all the testing results.
+\end{itemize}
+
+
 \subsection{Multimeter connection}
 It posed a challenge to establish the Computer-Arduino-Multimeter communication. Originally, the goal was to use the oscilloscope RIGOL MSO1104 Z but we couldn't find the drive needed to connect it to the computer. Eventually, we ended up using the multimeter Agilent 34401A 61/2 Digit Multimeter\cite{keysight34401A}. 
 
-The most prominent difficulty was that the multimeter received commands but did not transmit anything back. For example, when sending a MEAS:VOLT:DC? command, the voltage was displayed on the multimeter screen but not sent to the computer. This was resolved after adjusting the MAX3232 connector. A 3.5kOhm pull-up resistor was utilized and connected as shown in \ref{MAX3232}.
+The most prominent difficulty was that the multimeter received commands but did not transmit anything back. For example, when sending a MEAS:VOLT:DC? command, the voltage was displayed on the multimeter screen but not sent to the computer. This was resolved after adjusting the MAX3232 connector. A 3.5kOhm pull-up resistor was utilized and connected as shown in Figure \ref{MAX3232}.
 
 \begin{figure}[H]
           \centering
-          \includegraphics[angle=90, width=0.5\textwidth]{img/RS232_connector.jpeg}
-          \caption{Picture of MAX3232 with 3.5kOhm pull-up resistor.}
+          \includegraphics[angle=90, width=0.4\textwidth]{img/RS232_connector.jpeg}
+          \caption{MAX3232 with 3.5kOhm pull-up resistor.}
           \label{MAX3232}
     \end{figure}
 
-Some code that successfully enables communication between an Arduino DUE and the multimeter can be found in the Resources folder under the name Code that worked. This is useful to test initial communication with the multimeter. The connections of the Arduino DUE and the MAX3232 module are as shown in Figure \ref{MAX3232_Arduino}.
+Some code that successfully enables communication between an Arduino DUE and the multimeter can be found in the resources folder under the name Code that worked. This is useful to test initial communication with the multimeter. The connections of the Arduino DUE and the MAX3232 module are as shown in Figure \ref{MAX3232_Arduino}.
 
 \begin{figure}[H]
           \centering
-          \includegraphics[width=1\linewidth]{img/MAX3232_connection.png}
+          \includegraphics[width=0.9\linewidth]{img/MAX3232_connection.png}
           \caption{Electrical connection of Arduino DUE and MAX3232.}
           \label{MAX3232_Arduino}
     \end{figure}
 
 
 \subsection{PCB version 1}
-After some prototyping with a breadboard, the first version of the PCB was developed. It was given the name 'Automated DMM tester V1'. The purpose of this version is to test everything works smoothly and identify areas of improvement. 
+After some prototyping with a breadboard, the first version of the PCB was developed that was compatible with an Arduino DUE. It was given the name 'Automated DMM tester V1'. The purpose of this version is to test everything works smoothly and identify areas of improvement. 
 
 A 16 channel MUX was chosen to direct the current of each ePATH pin to the multimeter so that the tests can be performed. A MUX was chosen over alternatives, such as shift registers, for its simple wiring and fast operation \cite{tiMAX3232guide}. A 16 channeled one was chosen as there are 12 pins to be tested.
 
@@ -45,7 +69,7 @@ There were a number of errors with this design:
 
 \begin{figure}[H]
           \centering
-          \includegraphics[width=1\linewidth]{img/button_wiring.png}
+          \includegraphics[width=0.7\linewidth]{img/button_wiring.png}
           \caption{Corrected electrical connection of RESTART button}
           \label{button_wiring}
     \end{figure}
@@ -56,29 +80,36 @@ There were a number of errors with this design:
 The second version of the PCB was given the name 'Automated DMM tester V2-July 2025'. The purpose of this version is to perform some tests with ePATH and explore a different combination of electrical components. The improvements made for this version include:
 \begin{itemize}
 \item To facilitate the connection between the test points on ePATH with the PCB, a D-sub connector was implemented.
-\item The PN532 module capable of obtaining the RFID tag of the ePATH board \cite{pn532manual} was implemented.
+\item The PN532 module capable of obtaining the RFID tag of the ePATH board was implemented.
 \item Instead of using a multiplexer, shift registers and relays were used. That's because relays are optically isolated which minimizes noise. 
 \item Since the number of electrical components being controlled by the Arduino increased in this PCB iteration, an external voltage source was required; the PCB could no longer be powered by the Arduino. For that reason a 5V voltage regular was implemented.
 \item Since the ePATH board has 2 grounds a control system to switch between them was implemented.
 \item A digital potentiometer was implemented to produce the resistances needed for some of the ePATH board tests. In order to confirm that the potentiometer produced the correct resistances a port was implemented across it.
 \end{itemize}
 
-The kiCAD design of the PCB is stored in the resources folder under PCB attempt 2. To enhance my understanding of shift register operation I wired up the relays and shift registers in TinkerCad and ran some simulations. The simulation is stored in the resources folder under Shift registers sim. An important aspect of the software is sending the appropriate commands to the appropriate relays especially because of the unordered connections. The excel file used to work out the correct command order is in the resources folder under Shift register bytes. The Arduino IDE code I used to check that the correct relays are activated is in the resources folder under relay test.
+The kiCAD design of the PCB is stored in the resources folder under PCB attempt 2. To enhance my understanding of shift register operation I wired up the relays and shift registers in TinkerCad and ran some simulations. The simulation is stored in the resources folder under Shift registers sim. An important aspect of the software is sending the appropriate commands to the appropriate relays especially because of the unordered connections. The excel file used to work out the correct command order is in the resources folder under Shift register bytes. The Arduino IDE code I used to check that the correct relays are activated for troubleshooting is in the resources folder under relay test.
+
+In the schematic, the $620\,\Omega$ resistors were chosen since the shift registers output 5V and a current of 8mA. A 1V is sufficient to turn the relay on. Therefore:
+\[
+R = \frac{V}{I} = \frac{5\,\mathrm{V} - 1\,\mathrm{V}}{8\,\mathrm{mA}}=500\Omega
+\]
+Since $620\,\Omega$ is very close to the desired resistance and is a more readily available resistor value it was chosen for the schematic.
+
+According to the LM1085IS-ADJNOPB voltage regulator documentation the following equation applies when in the adjustable setting:
+$V_{out} = V_{ref} \left( 1 + \frac{R_2}{R_1} \right)$.
+Since $V_{out}$ = 5V and a typical $V_{ref}$ = 1.25V, the ratio $\frac{R_2}{R_1}$ equals 3. This is the reason a 10k and a 30k resistor were used in the schematic.
 
 In this version of the PCB, the wrong footprint was used for the ASSR-1420-302E relays as shown in Figure \ref{Relay_footprints}. For this reason the board could not be properly operated.
 
-
 \begin{figure}[h!]
     \centering
-    % First subfigure
-    \begin{subfigure}[b]{0.35\textwidth} % Reduced width for smaller images
+    \begin{subfigure}[b]{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{img/Wrong_Relay.png} 
         \caption{Relay with incorrect pad numbering.}
     \end{subfigure}
-    \hfill % Adds horizontal space between the figures
-    % Second subfigure
-    \begin{subfigure}[b]{0.35\textwidth} 
+    \hspace{0.05\textwidth} % Small fixed space
+    \begin{subfigure}[b]{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{img/Correct_Relay.png}
         \caption{Relay with correct pad numbering}
@@ -90,17 +121,18 @@ In this version of the PCB, the wrong footprint was used for the ASSR-1420-302E 
 
 
 
+
 \subsection{PCB version 3}
-The third version of the PCB was given the name 'Automated DMM tester V3-September 2025'. The only corrections to this version are the ASSR-1420-302E relay footprint and the wiring to the U2 relay that controls the resistance.The kiCAD design of the PCB is stored in the resources folder under PCB attempt 3.
+The third version of the PCB was given the name 'Automated DMM tester V3-September 2025'. The only corrections to this version are the ASSR-1420-302E relay footprint and the wiring to the U2 relay that controls the resistance. The kiCAD design of the PCB is stored in the resources folder under PCB attempt 3. The Arduino code used to control the PCB is stored in the resources folder under..............
 
 
 
 \subsection{GUI}
-A user friendly GUI has been developed to facilitate the testing of the ePATH PCB. The code for the GUI is on the ePATH-Test-Bench project of the company's GitHub \href{https://github.com/pathfinder-medical/ePATH-Test-Bench}{here}. This GUI is compatible with the Arduino code of all PCBs.
+A user friendly GUI has been developed to facilitate the testing of the ePATH board. The code for the GUI is on the ePATH-Test-Bench project of the company's GitHub \href{https://github.com/pathfinder-medical/ePATH-Test-Bench}{here}. To be able to run the code of ensure that all required modules are installed and that the directories at the start of the script are correct. This GUI is compatible with the Arduino code of all PCBs.
 
 The key functionalities of the GUI include:
 \begin{itemize}
-\item Run button; Starts the testing cycle.
+\item Run button; Starts the testing cycle. During testing, this button turns into a Stop button that interrupts the testing cycle.
 \item Clear button; Deletes all testing results for re-tests.
 \item Save button; Saves a pdf file with the table of results.
 \item Get RFID button; Gets the RFID of the ePATH board.
@@ -109,11 +141,9 @@ The key functionalities of the GUI include:
 
 
 \subsection{Future work}
-
 A series of improvements can be made on the current design. Some of these include:
 \begin{itemize}
 \item Currently, the user must manually connect all test points from the PCB cable to the ePATH board, a process that is both time-consuming and prone to creating tangled wiring. An alternative connection method could be explored—for instance, developing an additional PCB that can be mounted directly onto the ePATH board to interface with the test points more efficiently.
-\item Some tests like the switching and inverted signal tests need to be done manually by the user and are not part of the automated test process. These could be somehow incorporated in the automated testing.
-\item 
-\item 
+\item Some tests like the switching and inverted signal tests need to be done manually by the user and are not part of the automated process yet. These should also be automated to make the system optimal. In order to achieve this establishing a computer-oscilloscope communication is required.
+\item A casing to cover the PCB would need to be designed to make it more user-friendly.
 \end{itemize}

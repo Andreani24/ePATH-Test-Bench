@@ -1,27 +1,4 @@
 \section{Introduction}
-During the internship at Pathfinder medical, I completed a number of projects. The main project I worked on is ePATH Test Bench on which this document mostly focuses on. In addition to this some small projects were undertaken which are described in the Extra projects subsection.
+During the internship at Pathfinder medical, I completed a number of projects. The main project I worked on is ePATH Test Bench on which this document mostly focuses on. The purpose of this project was to perform automated testing on the ePATH board to ensure it operates properly. In addition to this, I undertook several smaller projects. I developed a graphical user interface (GUI) to efficiently save Arduino serial monitor data to text files. I also researched electrical switching methods to alternate between ePATH displays, aiming to replace the currently insufficient mechanical switching approach. Finally, in a collaborative project, I contributed to the development of a method for evaluating the accuracy of catheter alignment displayed on the ePATH screen. These projects are thoroughly described in the following document.
 
-\subsection{ePATH Test Bench Overview}
-The purpose of this project is to check that the PCB board of ePATH functions properly. This would help ensure that it was properly manufactured by the factory and it will help smooth identification of faults during maintenance. The process must be automated and user-friendly to enable any technician without good knowledge of the electronics of ePATH to perform this test. 
-
-The different components of the testing system and their interactions are briefly introduced in Figure \ref{end_goal_diagram}.
-
-
-\begin{figure}[H]
-          \centering
-          \includegraphics[width=1\linewidth]{img/General end goal diagram.png}
-          \caption{Overview of design aspects ePATH testing software.}
-          \label{end_goal_diagram}
-    \end{figure}
-
-
-
-\subsection{Main Objectives}
-The specific objectives of ePATH Test Bench project were: 
-\begin{itemize}
-\item To establish communication between a computer and a multimeter so that any measurements made from the ePATH PCB can easily be processed by the PC to check whether they are as expected.
-\item To design a custom PCB board that selects the appropriate pin from the ePATH PCB to be tested. Since the ePATH PCB consists of 2 different grounds, it should accommodate for this by selecting the correct one for each measurement.
-\item To develop a GUI that offers an interactive way to do the test.
-\item To produce a pdf file with a summary of all the testing results.
-\end{itemize}
-
+It should be noted that any files integral to the projects are stored in a resources folder on the company's google drive under the Andreani folder.

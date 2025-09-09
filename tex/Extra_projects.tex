@@ -1,11 +1,7 @@
-\section{Extra projects}
-
-Some additional small projects were undertaken in parallel to ePATH Test Bench project.
-
-\subsection{Electrical display switching}
+\section{Electrical display switching}
 To evaluate the alignment consistency across different ePATH devices during assembly and prior to release for use, a setup was proposed where a single crossing and target catheter kit is connected to multiple (currently three) ePATH displays. To streamline switching between displays, without manually disconnecting the catheter kit, which would require its removal from the saline tank, a switching mechanism is necessary. Although mechanical switching methods have been considered, an electronic switching solution is preferred for improved reliability and ease of use. Several electronic components that would enable the switching were explored as detailed below.
 
-\subsubsection{Background}
+\subsection{Background}
 Firstly, the idea of using solid state relays (SSRs) was explored \cite{ssr_rfwireless}. A large advantage of using this is that SSRs are optically isolated. Therefore, the input and output are physically isolated when the current is below a certain level which enhances precision by minimizing noise. This will be very useful in this system to prevent any potential effect on the alignment displayed between the connected devices. Other advantages include their ability to work with both DC and AC signals, their silent operation and low power consumption. A potential problem when working with SSRs is that they are all susceptible to ESD to some degree because they are built from semiconductor devices. 
 
 Secondly, transistors were considered as an alternative switching method \cite{transistor_switch}.  They offer a wide range of advantages such as their reliability and quick switching. Transistors can be arranged in Darlington or Sziklai configurations which increases the input impedance further. There is a wide variety of transistors for different operating conditions thus choosing the appropriate transistor involves more calculations. A big disadvantage is that the inputs and outputs are not isolated so even if the transistor if off there might be some leakage current that interferes with the displayed alignment.
@@ -16,8 +12,8 @@ Tri-state buffers were also considered to be used as switches. They enable or di
 
 For the reasons outlined above, particularly the significant advantage of opto-isolation, relays were selected to implement the electrical switches. These relays will be controlled by shift registers, which are themselves managed by an Arduino. Shift registers were chosen as they are relatively easy to control and have flexible functionality allowing many pins to be on simultaneously.
 
-\subsubsection{Design proposition}
-The crossing catheter has 4 connecting wires and the target catheter 2. Therefore, there are 6 connections per display that need to be switched between devices. Since there are 3 displays, this is an overall of 18 connections that need to be controlled. Therefore, 18 Single Pole Single Throw (SPST) relays would need to be used, or 9 dual SPST relays like ASSR-1420-302E \cite{assr_datasheet} or 5 quadrable SPST like AQS221N2SX \cite{panasonic_series1960_catalog_2025}. These can be controlled by 8-bit shift registers like SN74AHCT595PWR \cite{shift_register}. The block diagram below shows the connection between a particular pin on a catheter and it’s corresponding connecting point with the displays when using SPST relays. Another 15 such connections would need to be wired. This is the first possible design configuration.
+\subsection{Design proposition}
+The crossing catheter has 4 connecting wires and the target catheter 2. Therefore, there are 6 connections per display that need to be switched between devices. Since there are 3 displays, this is an overall of 18 connections that need to be controlled. Therefore, 18 Single Pole Single Throw (SPST) relays would need to be used, or 9 dual SPST relays like ASSR-1420-302E \cite{assr_datasheet} or 5 quadrable SPST like AQS221N2SX \cite{panasonic_series1960_catalog_2025}. These can be controlled by 8-bit shift registers like SN74AHCT595PWR \cite{shift_register}. The block diagram in Figure \ref{button_wiring} shows the connection between a particular pin on a catheter and it’s corresponding connecting point with the displays when using SPST relays. Another 15 such connections would need to be wired. This is the first possible design configuration.
 
 \begin{figure}[H]
           \centering
@@ -26,41 +22,37 @@ The crossing catheter has 4 connecting wires and the target catheter 2. Therefor
           \label{button_wiring}
     \end{figure}
     
-This system could be complex to control because of the large number of SPST relays.
-
-For the second design structure, to minimize the number of relays required, an alternative approach is to connect the inputs of all three displays to one common bus for the crossing catheter and another bus for the target catheter. The catheter kit is also connected to these buses, allowing communication with any of the displays. By selectively powering on only the desired display, we ensure that only one display is actively sending and receiving signals at a time. 
-To turn on and off the appropriate display, relays can be used. Each display is powered by 2 wires; the ground and the voltage wire. The ground connection of all the displays can be connected. The voltage wire of each display can be switched on and off using 3 SPST relays controlled by a shift register.  The block diagram of such a connection is shown below. An important thing to consider when choosing these relays is that they must be rated to handle the voltage and current required to run the ePATH display.
+This system could be complex to control because of the large number of SPST relays. For the second design structure, to minimize the number of relays required, an alternative approach is to connect the inputs of all three displays to one common bus for the crossing catheter and another bus for the target catheter. The catheter kit is also connected to these buses, allowing communication with any of the displays. By selectively powering on only the desired display, we ensure that only one display is actively sending and receiving signals at a time. 
+To turn on and off the appropriate display, relays can be used. Each display is powered by 2 wires; the ground and the voltage wire. The ground connection of all the displays can be connected. The voltage wire of each display can be switched on and off using 3 SPST relays controlled by a shift register.  The block diagram of such a connection is shown in Figure \ref{button_wiring1}. An important thing to consider when choosing these relays is that they must be rated to handle the voltage and current required to run the ePATH display.
 \begin{figure}[H]
           \centering
           \includegraphics[width=1\linewidth]{img/Design2.png}
           \caption{Block diagram of second design proposition using SPST relays.}
-          \label{button_wiring}
+          \label{button_wiring1}
     \end{figure}
 One drawback of this wiring method is that the device must be manually powered on each time a switch is made, followed by waiting for the startup process to complete. As a result, this approach is slower and less efficient compared to Design 1.
 
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 In conclusion, to electrically switch the catheter connections between the three ePATH displays, a combination of relays and shift registers was determined to be the most effective solution. Among the configurations considered, Design 1 was found to be the most suitable for implementing the system with minimal interference.
 
 
 
 
 
-\subsection{Text file saving}
+\section{Text file saving}
 Data printed in the Serial monitor of Arduino IDE can easily be lost and is difficult to work with. To make data acquisition and handling easier, a simple GUI was developed that captures the printed data and saves it in a .txt file. The GUI consists of a:
 \begin{itemize}
 \item A list-box that displays the information printed on the Serial monitor. 
 \item A save button that saves the data in a text file at the desired directory.
 \item A clear button that deletes data in case they were corrupted.
-\item A information button that displays an information window that explains the GUI's functionalities.
+\item An information button that displays an information window that explains the GUI's functionalities.
 \end{itemize}
 
-The python code used to develop this GUI is in the resources folder of this document under the name Save text files. An Arduino code that prints out the numbers from 1-100 is also provided for demonstrative purposes.
+The python code used to develop this GUI is in the resources folder under the name Save text files.
 
 
-\subsection{Alignment accuracy assessment}
-This project is covered in a separate report as it was a collaborative project.
-
-
+\section{Alignment accuracy assessment}
+This project is covered in a separate report as it was a collaborative project. The report can be found \href{https://www.overleaf.com/project/68b80f7fcdcfcb7936a1d5bc/invite/token/de0f1a7e7403cbb879994c8860daa5b3b4d8ab23ba6d160b}{here}
 
 
