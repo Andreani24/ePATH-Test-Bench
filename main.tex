@@ -1,9 +1,11 @@
-\documentclass[10pt,twocolumn]{scrartcl}
+%\documentclass[10pt,twocolumn]{scrartcl}
+\documentclass[10pt]{scrartcl}  % single column, larger font
 \usepackage[a4paper,width=170mm,top=25mm,bottom=25mm,bindingoffset=3mm]{geometry}
 \setlength{\parskip}{1em}
 \usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
-\usepackage[numbers]{natbib}
 \usepackage{hyperref}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
 \usepackage{lipsum}
 \usepackage{graphicx} 
 \usepackage{url} 
@@ -15,6 +17,7 @@
 \usepackage{multicol}
 \usepackage{comment}
 
+
 \renewenvironment{abstract}
  {\quotation\large\noindent\rule{\linewidth}{.5pt}\par\smallskip
   {\centering\bfseries\abstractname\par}\medskip}
@@ -24,24 +27,18 @@
 
 \renewcommand{\refname}{References}
 
-\twocolumn[
-\begin{@twocolumnfalse}
-	\title{ePATH Test Bench}
+\title{ePATH Test Bench}
 \author{Andreani Kalatha}
 \maketitle
 
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetuer adipiscingelit. Ut purus elit, vestibulum ut, placerat ac, adipisc-ing vitae, felis. Curabitur dictum gravida mauris. Namarcu libero, nonummy eget, consectetuer id, vulputatea, magna.  Donec vehicula augue eu neque.  Pellen-tesque habitant morbi tristique senectus et netus etmalesuada fames ac turpis egestas. Mauris ut leo. Crasviverra metus rhoncus sem.  Nulla et lectus vestibu-lum urna fringilla ultrices. Phasellus eu tellus sit amettortor gravida placerat. Integer sapien est, iaculis in,pretium quis, viverra ac, nunc. Praesent eget sem velleo ultrices bibendum.  Aenean faucibus.  Morbi do-lor nulla, malesuada eu, pulvinar at, mollis ac, nulla.Curabitur auctor semper nulla. Donec varius orci egetrisus.  Duis nibh mi, congue eu, accumsan eleifend,sagittis quis, diam. Duis eget orci sit amet orci dignis-sim rutrum.
+This document provides an overview of the projects I completed during my internship. My primary assignment focused on the development of the ePATH Test Bench, which was designed to verify the functionality of the ePATH board. As part of this project, I designed three PCB boards compatible with the Arduino DUE, with the third design demonstrating satisfactory performance. I also developed a graphical user interface that provided a user-friendly approach for conducting all required tests. In addition to the main project, I worked on several smaller initiatives. These included creating an interface to save serial monitor data to a text file, researching electrical switching methods to alternate between ePATH displays, and developing an assessment method to evaluate the accuracy of catheter alignment.
 \end{abstract}
-\end{@twocolumnfalse}]
+
 
 \input{tex/introduction.tex} 
 \input{tex/ePATH_Test_Bench}
 \input{tex/Extra_projects}
-\input{tex/discussion.tex}
 \input{tex/conclusion.tex}
-\input{tex/appendix.tex}
-\bibliographystyle{plain}
-\bibliography{references}
-
+\printbibliography
 \end{document}

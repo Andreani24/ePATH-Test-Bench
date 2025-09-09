@@ -747,9 +747,9 @@ design rules under a new name.
 <wire x1="151.6613" y1="35.6608" x2="235.4813" y2="35.6608" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="U2_Q1">
-<contactref element="U2" pad="1"/>
 <contactref element="R16" pad="2"/>
-<wire x1="154.2013" y1="35.6608" x2="240.5613" y2="35.6608" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="1"/>
+<wire x1="240.5613" y1="35.6608" x2="154.2013" y2="35.6608" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="U2_Q0">
 <contactref element="U2" pad="15"/>

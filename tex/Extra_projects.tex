@@ -3,44 +3,40 @@
 Some additional small projects were undertaken in parallel to ePATH Test Bench project.
 
 \subsection{Electrical display switching}
-To test the functionality of the device during animal studies, it was proposed that the Target and Crossing catheters are connected to three different ePATH displays. To make the change between displays as easy as possible without requiring the removal of the catheters from the animal's body a switching mechanism is required. While the mechanical switching between the displays with switches was already explored, an electrical decision was required. Some electrical components that would enable the switching were explored as follows.
+To evaluate the alignment consistency across different ePATH devices during assembly and prior to release for use, a setup was proposed where a single crossing and target catheter kit is connected to multiple (currently three) ePATH displays. To streamline switching between displays, without manually disconnecting the catheter kit, which would require its removal from the saline tank, a switching mechanism is necessary. Although mechanical switching methods have been considered, an electronic switching solution is preferred for improved reliability and ease of use. Several electronic components that would enable the switching were explored as detailed below.
 
 \subsubsection{Background}
-Firstly, the idea of using solid state relays(SSRs) was explored \cite{ssr_rfwireless}. A large advantage of using this is that SSRs are optically isolated. Therefore, the input and output are physically isolated when the current is below a certain level which enhances precision by minimizing noise. This will be very useful in this system as interferences from the different displays will have no effect on how the system behaves. Other advantages include their ability to work with both DC and AC signals, their silent operation and low power consumption. A problem when working with SSRs is that they break easily. 
+Firstly, the idea of using solid state relays (SSRs) was explored \cite{ssr_rfwireless}. A large advantage of using this is that SSRs are optically isolated. Therefore, the input and output are physically isolated when the current is below a certain level which enhances precision by minimizing noise. This will be very useful in this system to prevent any potential effect on the alignment displayed between the connected devices. Other advantages include their ability to work with both DC and AC signals, their silent operation and low power consumption. A potential problem when working with SSRs is that they are all susceptible to ESD to some degree because they are built from semiconductor devices. 
 
-Secondly, transistors were considered as an alternative switching method as they are widely used as switches \cite{transistor_switch}.  They offer a wide range of advantages such as current control, controlling the exact current that would enter the ePATH display, and offer quick switching. Transistors can be arranged in Darlington or Sziklai configurations which increases the input impedance further. There is a wide variety of transistors for different operating conditions thus choosing the appropriate transistor involves more calculations. A big disadvantage is that the inputs and outputs are not isolated so even if the transistor if off there might be some leakage current that interferes with the operation of the system.
+Secondly, transistors were considered as an alternative switching method \cite{transistor_switch}.  They offer a wide range of advantages such as their reliability and quick switching. Transistors can be arranged in Darlington or Sziklai configurations which increases the input impedance further. There is a wide variety of transistors for different operating conditions thus choosing the appropriate transistor involves more calculations. A big disadvantage is that the inputs and outputs are not isolated so even if the transistor if off there might be some leakage current that interferes with the displayed alignment.
 
-Multiplexers can also function as switches. For example, the SN74CBT16214CDLR \cite{sn74cbt_datasheet} provides twelve independent 3:1 MUX channels that could be used for this purpose. However, once again there is a direct physical connection between the inputs and outputs. This could pose problems if the circuit is not powered or if the MUX malfunctions, potentially allowing unintended signal paths. Controlling the MUX with an Arduino would also increase the system’s complexity. Furthermore, there are limitations on which ports can be used simultaneously, which could restrict potential future expansions of the project.
+Multiplexers (MUX) can also function as electronic switches. For instance, the SN74CBT16214CDLR \cite{sn74cbt_datasheet} offers twelve independent 3:1 MUX channels, which can be utilized for signal routing. Like relays, MUX channels exhibit high impedance when not selected, but they tend to be more susceptible to electrical interference. It's also important to note that no more than one port can be used at a time in MUX, which restricts potential future expansions of the project. Moreover, MUX devices cannot handle AC signals unless they feature dual-supply operation. Without this, switching an AC signal would require offsetting the signal within the range of VCC and ground, which can introduce additional design challenges.
 
-Tri-state buffers were also considered to be used as switches. They enable or disable the connection between input and output via changes in impedance \cite{digital_buffer}. However, they were quickly ruled out upon determining that their output is limited to only three states: logic high (1), logic low (0), or high impedance (Z). As a result, they cannot transmit complex analogue signals, which are the type of signals involved in our application. Another component that was quickly rejected was the silicon-controlled rectifier (SCR) \cite{scr_switch}. The main drawback is the difficulty of turning off a conducting SCR, which requires specialized commutation circuits to force the switch open. Additionally, SCRs can unintentionally turn on due to a high rate of voltage change (dv/dt) at the source which might occur due to electrical interference. It should be noted however that one advantage of the SCR, compared to a transistor, is that it operates strictly in binary states: either fully on or fully off, with no active region of operation.
+Tri-state buffers were also considered to be used as switches. They enable or disable the connection between input and output via changes in impedance \cite{digital_buffer}. However, they were quickly ruled out upon determining that their output is limited to only three states: logic high (1), logic low (0), or high impedance (Z). As a result, they cannot transmit analogue signals, which are the type of signals involved in our application. Another component that was quickly rejected was the silicon-controlled rectifier (SCR) \cite{scr_switch}. The main drawback is the difficulty of turning off a conducting SCR, which requires specialized commutation circuits to force the switch open. Additionally, SCRs can unintentionally turn on due to a high rate of voltage change (dv/dt) at the source which might occur due to electrical interference. It should be noted however that one advantage of the SCR, compared to a transistor, is that it operates strictly in binary states: either fully on or fully off, with no active region of operation.
 
 For the reasons outlined above, particularly the significant advantage of opto-isolation, relays were selected to implement the electrical switches. These relays will be controlled by shift registers, which are themselves managed by an Arduino. Shift registers were chosen as they are relatively easy to control and have flexible functionality allowing many pins to be on simultaneously.
 
 \subsubsection{Design proposition}
-Design one:
-
-The crossing catheter has 4 connecting wires and the target catheter 2. Therefore, 6 connections per display need to be switched on and off. Since there are 3 displays, this is an overall of 18 connections that need to be controlled. Therefore, 18 Single Pole Single Throw(SPST) relays would need to be used, or 9 Single Pole Double Throw relays like ASSR-1420-302E \cite{assr_datasheet} or 6 Single Pole Thee Throw relays like FMSW6362 \cite{relay_switch. These can be controlled by 8-bit shift registers like SN74AHCT595PWR \cite{shift_register}. The block diagram below shows the connection between a particular pin on a catheter and it’s corresponding connecting point with the displays when using SPST relays. Another 15 such connections would need to be wired.
+The crossing catheter has 4 connecting wires and the target catheter 2. Therefore, there are 6 connections per display that need to be switched between devices. Since there are 3 displays, this is an overall of 18 connections that need to be controlled. Therefore, 18 Single Pole Single Throw (SPST) relays would need to be used, or 9 dual SPST relays like ASSR-1420-302E \cite{assr_datasheet} or 5 quadrable SPST like AQS221N2SX \cite{panasonic_series1960_catalog_2025}. These can be controlled by 8-bit shift registers like SN74AHCT595PWR \cite{shift_register}. The block diagram below shows the connection between a particular pin on a catheter and it’s corresponding connecting point with the displays when using SPST relays. Another 15 such connections would need to be wired. This is the first possible design configuration.
 
 \begin{figure}[H]
           \centering
           \includegraphics[width=1\linewidth]{img/Design1.png}
-          \caption{Block diagram of first design proposition}
+          \caption{Block diagram of first design proposition using SPST relays. This only shows three out of the 18 connections needed.}
           \label{button_wiring}
     \end{figure}
     
-A disadvantage of this design is the large amount of relays and thus wiring needed.
+This system could be complex to control because of the large number of SPST relays.
 
-Design two:
-
-In order to minimize the number of relays and connections needed, an alternative solution is to connect the inputs of the 3 displays and selectively turn on the display we want to use. This would mean that data is sent to all displays but only the display that is turned on is processing it.
-To turn on and off the appropriate display, relays can be used. Each display is powered by 2 wires; the ground and the voltage wire. The ground connection of all the displays can be connected. The voltage wire of each display can be switched on and off using 3 SPST relays controlled by a shift register.  The block diagram of such a connection is shown below.
+For the second design structure, to minimize the number of relays required, an alternative approach is to connect the inputs of all three displays to one common bus for the crossing catheter and another bus for the target catheter. The catheter kit is also connected to these buses, allowing communication with any of the displays. By selectively powering on only the desired display, we ensure that only one display is actively sending and receiving signals at a time. 
+To turn on and off the appropriate display, relays can be used. Each display is powered by 2 wires; the ground and the voltage wire. The ground connection of all the displays can be connected. The voltage wire of each display can be switched on and off using 3 SPST relays controlled by a shift register.  The block diagram of such a connection is shown below. An important thing to consider when choosing these relays is that they must be rated to handle the voltage and current required to run the ePATH display.
 \begin{figure}[H]
           \centering
           \includegraphics[width=1\linewidth]{img/Design2.png}
-          \caption{Block diagram of second design proposition}
+          \caption{Block diagram of second design proposition using SPST relays.}
           \label{button_wiring}
     \end{figure}
-An issue with this wiring method is that when sending commands to a display that is turned off some interference can be created which will affect its functionality when it’s turned on. Another issue is that the displays take some time to turn on thus this method would be slower. Therefore, this is deemed a worse design than Design 1.
+One drawback of this wiring method is that the device must be manually powered on each time a switch is made, followed by waiting for the startup process to complete. As a result, this approach is slower and less efficient compared to Design 1.
 
 
 \subsubsection{Conclusion}
@@ -61,56 +57,10 @@ Data printed in the Serial monitor of Arduino IDE can easily be lost and is diff
 
 The python code used to develop this GUI is in the resources folder of this document under the name Save text files. An Arduino code that prints out the numbers from 1-100 is also provided for demonstrative purposes.
 
-\begin{table*}[ht]
-    \centering
-    \begin{tabular}{p{0.25\linewidth}p{0.25\linewidth}p{0.25\linewidth}}
-    \hline
-    column 1 & column 2 & column 3\\
-    \hline
-    1 & 2 & 3\\
-    1 & 2 & 3\\
-    1 & 2 & 3\\
-    1 & 2 & 3\\
-    \hline
-    \end{tabular}
-    \caption{Another random table}
-    \label{tab:2}
-\end{table*}
-\noindent Another type of table for your results below.
 
-\subsection{Subtopic 2}
-\lipsum[1]
+\subsection{Alignment accuracy assessment}
+This project is covered in a separate report as it was a collaborative project.
 
-\noindent Another figure grid example: (on next page)
 
-\begin{figure*}[ht]
-\begin{multicols}{2}
-        \centering
-        \begin{subfigure}[b]{0.475\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{img/bioeng.jpg}
-            \caption{Part 1}    
-        \end{subfigure}
-        \hfill
-        \begin{subfigure}[b]{0.475\textwidth}  
-            \centering 
-            \includegraphics[width=\textwidth]{img/bioeng.jpg}
-            \caption{Part 2}    
-        \end{subfigure}
-        \vskip\baselineskip
-        \begin{subfigure}[b]{0.475\textwidth}   
-            \centering 
-            \includegraphics[width=\textwidth]{img/bioeng.jpg}
-            \caption{Part 3}  
-        \end{subfigure}
-        \hfill
-        \begin{subfigure}[b]{0.475\textwidth}   
-            \centering 
-            \includegraphics[width=\textwidth]{img/bioeng.jpg}
-            \caption{Part 4}    
-        \end{subfigure}
-        \label{fig:mean and std of nets}
-        \end{multicols}
-        \caption {A figure grid} 
-        \label{fig:3}
-    \end{figure*}
+
+
